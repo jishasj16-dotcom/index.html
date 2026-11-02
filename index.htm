@@ -4,6 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Motor Health Monitor</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0f141a">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
   :root {
@@ -309,6 +315,9 @@ load();
 setInterval(load, CONFIG.REFRESH_SECONDS * 1000);
 // refresh "x s ago" and offline detection between fetches
 setInterval(() => { if (lastFeeds.length) render(lastFeeds); }, 5000);
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+}
 </script>
 </body>
 </html>
